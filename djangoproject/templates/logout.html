@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+<h1><span class="	glyphicon glyphicon-log-out"></span> logged out</h1>
+<h6 class="text-muted">you have been sucessfully logged out</h6>
+  <small class="text-muted">Want to login again? <a href="{% url 'login' %}">login</a></small>
+{% endblock %}

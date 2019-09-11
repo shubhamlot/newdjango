@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>home user</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <style>
+    /* Set black background color, white text and some padding */
+    footer {
+      padding-left: 0;
+      padding-right: 0px;
+      background-color: black;
+      color: white;
+      padding: 15px;
+}
+
+
+
+p.followers{
+  font-size: 18px;
+}
+
+b.likecom{
+  font-size: 14px;
+}
+
+
+
+#myBtn {
+
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 99;
+  width:40px;
+  height:40px;
+  border: none;
+  outline: none;
+  background-color:blue;
+  color: white;
+
+  padding: 2px,2px,2px,2px;
+  border-radius: 100px;
+  opacity:0.5;
+}
+
+#myBtn:hover {
+  background-color: #000080;
+  opacity: 1.0;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #111111;
+}
+btn-link:{
+	outline:none;
+}
+
+</style>
+</head>
+<body >
+<form>
+  {% csrf_token %}
+  <!--floating button-->
+  <button  id="myBtn" title="Add Post"><b><span class="glyphicon glyphicon-plus"></b></button>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+
+      <ul class="nav navbar-nav navbar-left">
+
+					 <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#demo"><span class="glyphicon glyphicon-align-justify"></span></button>
+  <div id="demo" class="collapse">
+   <form class="navbar-form navbar-right" role="search">
+        <div class="form-group input-group">
+          <input type="text" class="form-control" placeholder="Search..">
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button">
+              <span class="glyphicon glyphicon-search"></span>
+            </button>
+          </span>
+        </div>
+      </form>
+	  <li><a href="#"><span class="	glyphicon glyphicon-user"><b> Account</b></span></a></li>
+
+                    <li><a href="#"><span class="glyphicon glyphicon-cog"><b> Settings</b></a></span></li>
+                    <li><a href="{% url 'About' %}"><span class="glyphicon glyphicon-pencil"><b> About</b></a></span></li>
+
+                      <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"><b> Logout</b></a></span></li>
+                      </ul>
+                    </div>
+
+  </div>
+
+
+    </div>
+  </div>
+</nav>
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-1" >
+    </div>
+    <div class="col-sm-3">
+      <div >
+        <h2  color="black">{{ user.username }}</h2><p class="followers">followers <b>0<!--dynamic--></b> | following <b>0<!--dynamic--></b><p>
+
+          <a href="{% url 'profileEdit' %}">
+
+            <img src="{{ user.userprofile.image.url }}"class="img-circle" height="65" width="65" alt="Avatar">
+
+          </a>
+
+        <br><br>
+        <div > <button class="btn btn-primary" type="button" name="button" style="border: none; background-color: #0000ff;  color: #ffffff;  font-size: 20;  border-radius: 5px;  font-weight: bold;  padding-left: 110px;  padding-right: 110px;">Follow</button></div>
+      </div><br>
+      <div class="well">
+        {% if request.user.is_authenticated %}
+          <h2>About the me</h2>
+        {% else %}
+        <h2>About the {{ user.username }}</h2>
+        {% endif %}
+
+        <blockquote>
+          <div class="text-truncate">
+          <p>{{ user.userprofile.about }}</p>
+
+        </blockquote>
+        </div>
+      </div>
+
+
+
+      <div class="col-sm-1">
+      </div>
+
+        <div class="col-sm-6" >
+
+          <div class="well">
+             <!-- for start -->
+               <div class="panel-default text-left"><h5> <img src="pics/Penguins.jpg" class="img-circle" height="30" width="30" alt="Avatar"> username
+              </span></h5><h6>location<h6><br></div>
+              <div class="panel-default text-center">
+                <img class="img-responsive" src="pics/Penguins.jpg"  width="700" height="500">
+            </div>
+                  <!-- below code chacks if message variable is not empty and prints it in css format -->
+                  <article class="media content-section">
+                    <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
+                <div class="media-body">
+                  <div class="article-metadata">
+                    <a class="mr-2" href="#">{{ post.author }}</a>
+                    <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+                  </div>
+                  <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
+                  <p class="article-content">{{ post.content }}</p>
+                </div>
+              </article>
+
+
+          </div>
+
+            <div>
+              <h4>
+            <span class="glyphicon glyphicon-heart-empty"></span>
+            <b class="likecom"> 0 Likes <b>
+            <span class="glyphicon glyphicon-comment"></span>
+            <b lass="likecom"> 0 comments <b>
+          </h4>
+          <hr class="part">
+            </div>
+          <br>
+          <!--end for-->
+
+      </div>
+      <div class="col-sm-1">
+      </div>
+</div>
+
+</form>
+</body>
+</html>

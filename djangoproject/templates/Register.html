@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+**people/person_form.html**
+
+{% block content %}
+  <form method="post" novalidate>
+    {% csrf_token %}
+    <div class="row">
+      <fieldset class="form-group">
+        {{ form|crispy }}
+      </fieldset>
+
+    </div>
+
+    <button type="submit" class="btn btn-primary" >Save person</button>
+    <div class="row">
+      <small class="text-muted">Already Have an account? <a href="{% url 'login' %}">login</a></small>
+
+    </div>
+  </form>
+{% endblock %}
